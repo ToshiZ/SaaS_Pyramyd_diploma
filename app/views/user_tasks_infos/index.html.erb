@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing User Tasks Infos</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Task name</th>
+      <th>Mqinfo</th>
+      <th>Stdout rez</th>
+      <th>Work status</th>
+      <th>Errors</th>
+      <th>Manager log</th>
+      <th>Output</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @user_tasks_infos.each do |user_tasks_info| %>
+      <tr>
+        <td><%= user_tasks_info.task_name %></td>
+        <td><%= user_tasks_info.mqinfo %></td>
+        <td><%= user_tasks_info.stdout_rez %></td>
+        <td><%= user_tasks_info.work_status %></td>
+        <td><%= user_tasks_info.errors %></td>
+        <td><%= user_tasks_info.manager_log %></td>
+        <td><%= user_tasks_info.output %></td>
+        <td><%= link_to 'Show', user_tasks_info %></td>
+        <td><%= link_to 'Edit', edit_user_tasks_info_path(user_tasks_info) %></td>
+        <td><%= link_to 'Destroy', user_tasks_info, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New User tasks info', new_user_tasks_info_path %>

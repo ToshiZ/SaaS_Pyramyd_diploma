@@ -1,0 +1,2 @@
+module SshConnectionsHelper
+end

@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @ssh_connection.name %>
+</p>
+
+<p>
+  <strong>Ip:</strong>
+  <%= @ssh_connection.ip %>
+</p>
+
+<p>
+  <strong>Login:</strong>
+  <%= @ssh_connection.login %>
+</p>
+
+<%= link_to 'Edit', edit_ssh_connection_path(@ssh_connection) %> |
+<%= link_to 'Back', ssh_connections_path %>

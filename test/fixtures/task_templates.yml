@@ -1,0 +1,55 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  historyenabled: false
+  description: MyString
+  stopcode: MyString
+  resultcode: MyString
+  dir: MyString
+  nfs: false
+  checkpoint: 1
+  logPath: MyString
+  logNfs: false
+  logEpk: false
+  logCluster: false
+  logNode: false
+  portionCluster: 1
+  portionNode: 1
+  portionProgram: 1
+  parameters: MyString
+  parametersDescription: MyString
+  profiles: MyString
+  profilesDescription: MyString
+  passportName: MyString
+  procNum: 1
+  maxTime: 1
+  taskName: MyString
+  userId: 1
+
+two:
+  name: MyString
+  historyenabled: false
+  description: MyString
+  stopcode: MyString
+  resultcode: MyString
+  dir: MyString
+  nfs: false
+  checkpoint: 1
+  logPath: MyString
+  logNfs: false
+  logEpk: false
+  logCluster: false
+  logNode: false
+  portionCluster: 1
+  portionNode: 1
+  portionProgram: 1
+  parameters: MyString
+  parametersDescription: MyString
+  profiles: MyString
+  profilesDescription: MyString
+  passportName: MyString
+  procNum: 1
+  maxTime: 1
+  taskName: MyString
+  userId: 1

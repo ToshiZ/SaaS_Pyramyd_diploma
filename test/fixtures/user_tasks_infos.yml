@@ -1,0 +1,19 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  task_name: MyString
+  mqinfo: MyText
+  stdout_rez: MyText
+  work_status: MyText
+  errors: MyText
+  manager_log: MyText
+  output: MyText
+
+two:
+  task_name: MyString
+  mqinfo: MyText
+  stdout_rez: MyText
+  work_status: MyText
+  errors: MyText
+  manager_log: MyText
+  output: MyText

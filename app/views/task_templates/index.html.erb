@@ -1,0 +1,75 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Task Templates</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Historyenabled</th>
+      <th>Description</th>
+      <th>Stopcode</th>
+      <th>Resultcode</th>
+      <th>Dir</th>
+      <th>Nfs</th>
+      <th>Checkpoint</th>
+      <th>Logpath</th>
+      <th>Lognfs</th>
+      <th>Logepk</th>
+      <th>Logcluster</th>
+      <th>Lognode</th>
+      <th>Portioncluster</th>
+      <th>Portionnode</th>
+      <th>Portionprogram</th>
+      <th>Parameters</th>
+      <th>Parametersdescription</th>
+      <th>Profiles</th>
+      <th>Profilesdescription</th>
+      <th>Passportname</th>
+      <th>Procnum</th>
+      <th>Maxtime</th>
+      <th>Taskname</th>
+      <th>Userid</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @task_templates.each do |task_template| %>
+      <tr>
+        <td><%= task_template.name %></td>
+        <td><%= task_template.historyenabled %></td>
+        <td><%= task_template.description %></td>
+        <td><%= task_template.stopcode %></td>
+        <td><%= task_template.resultcode %></td>
+        <td><%= task_template.dir %></td>
+        <td><%= task_template.nfs %></td>
+        <td><%= task_template.checkpoint %></td>
+        <td><%= task_template.logPath %></td>
+        <td><%= task_template.logNfs %></td>
+        <td><%= task_template.logEpk %></td>
+        <td><%= task_template.logCluster %></td>
+        <td><%= task_template.logNode %></td>
+        <td><%= task_template.portionCluster %></td>
+        <td><%= task_template.portionNode %></td>
+        <td><%= task_template.portionProgram %></td>
+        <td><%= task_template.parameters %></td>
+        <td><%= task_template.parametersDescription %></td>
+        <td><%= task_template.profiles %></td>
+        <td><%= task_template.profilesDescription %></td>
+        <td><%= task_template.passportName %></td>
+        <td><%= task_template.procNum %></td>
+        <td><%= task_template.maxTime %></td>
+        <td><%= task_template.taskName %></td>
+        <td><%= task_template.userId %></td>
+        <td><%= link_to 'Show', task_template %></td>
+        <td><%= link_to 'Edit', edit_task_template_path(task_template) %></td>
+        <td><%= link_to 'Destroy', task_template, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Task template', new_task_template_path %>

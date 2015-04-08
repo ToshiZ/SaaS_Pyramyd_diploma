@@ -1,0 +1,21 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  mqinfo: MyText
+  stdout_rez: MyText
+  work_status: MyText
+  errors_suppz: MyText
+  manager_log: MyText
+  output_suppz: MyText
+  status_suppz: MyString
+
+two:
+  name: MyString
+  mqinfo: MyText
+  stdout_rez: MyText
+  work_status: MyText
+  errors_suppz: MyText
+  manager_log: MyText
+  output_suppz: MyText
+  status_suppz: MyString

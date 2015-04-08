@@ -1,0 +1,39 @@
+
+<% content_for :javascripts, javascript_include_tag("user-ng-app") %>
+<% content_for :base_href, "/user_app/" %>
+<% content_for :'ng-app', "ng-app=pyramidApp"%>
+
+<!-- <div ng-include="'shared/navbar.html'"></div> -->
+<!-- div class="main-view-container" ui-view></div> -->
+
+<!-- Header -->
+<header>
+    <div class="sticky-nav">
+    	<a id="mobile-nav" class="menu-nav" href="#menu-nav"></a>
+        
+        <div id="logo">
+        	<a id="goUp" href="#home-slider" title="Brushed | Responsive One Page Template">Brushed Template</a>
+        </div>
+        
+        <nav id="menu"  ng-controller="MainCtrl">
+        	<ul id="menu-nav">
+            	<li class="current"><a href="#home-slider">ПК "Пирамида"</a></li>
+                <li><a href="/user_app/templates">Шаблоны</a></li>
+                <li><a href="/user_app/tasks">Задания</a></li>
+                <li><a ng-href="/user_app/connections">Соединения</a></li>               
+				<li><% if user_signed_in? %>
+                         <a ng-click="logOut()">Выйти</a>
+                    <% end %>
+                    </li>
+                 <li><% if user_signed_in? %>
+                        <span>Здравствуйте, <%= current_user.email %></span>
+                        <% end %></li>
+
+            </ul>
+        </nav>
+    </div>
+</header>	
+<!-- End Header -->
+	<ng-view></ng-view>
+
+

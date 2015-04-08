@@ -1,0 +1,26 @@
+<div class="span10" >
+		<div class="accordion" id="accordionArea">                
+            <div ng-repeat="passport in passports" class="accordion-group">
+				<div class="accordion-heading togglize">
+			        <a  class="accordion-toggle" data-toggle="collapse" data-parent="#accordionArea" href="#area{{passport.id}}">
+			            id: {{passport.id}} Имя файла: {{passport.fileName}} Имя задания: {{passport.taskName}}
+			        </a>
+			    </div>	
+			    <div id="area{{passport.id}}" class="accordion-body collapse">
+                    <div class="accordion-inner">
+	                    <form name="sshConnection">
+							<fieldset>
+		                    	<p><label> Адрес сервера </label>
+		                        	<input id="ssh-ip" ng-model="passport.sshIp" type="text" placeholder = "172.16.36.128"></input></p>
+		                        <p><label> Логин </label>
+		                        	<input id="ssh-login" ng-model="passport.sshLogin" type="text" placeholder = "user"></input></p>
+		                        <p><label>Пароль</label>
+		                        	<input id="ssh-pass" ng-model="passport.sshPass" type="password" placeholder = "user"></input></p>
+	                        </fieldset>
+	                        <button type="submit" ng-click="runTask(passport, sshConnection)">Запустить</button>
+	                    </form>
+                    </div>
+                </div>
+		    </div>
+	   </div>
+	</div>	

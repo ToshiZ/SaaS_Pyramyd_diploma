@@ -1,0 +1,49 @@
+<%= form_for(@task) do |f| %>
+  <% if @task.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@task.errors.count, "error") %> prohibited this task from being saved:</h2>
+
+      <ul>
+      <% @task.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :mqinfo %><br>
+    <%= f.text_area :mqinfo %>
+  </div>
+  <div class="field">
+    <%= f.label :stdout_rez %><br>
+    <%= f.text_area :stdout_rez %>
+  </div>
+  <div class="field">
+    <%= f.label :work_status %><br>
+    <%= f.text_area :work_status %>
+  </div>
+  <div class="field">
+    <%= f.label :errors_suppz %><br>
+    <%= f.text_area :errors_suppz %>
+  </div>
+  <div class="field">
+    <%= f.label :manager_log %><br>
+    <%= f.text_area :manager_log %>
+  </div>
+  <div class="field">
+    <%= f.label :output_suppz %><br>
+    <%= f.text_area :output_suppz %>
+  </div>
+  <div class="field">
+    <%= f.label :status_suppz %><br>
+    <%= f.text_field :status_suppz %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

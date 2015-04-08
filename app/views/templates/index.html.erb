@@ -1,0 +1,79 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Templates</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Taskname</th>
+      <th>Taskdescription</th>
+      <th>Passportname</th>
+      <th>Name</th>
+      <th>Procnum</th>
+      <th>Maxtime</th>
+      <th>Historyenabled</th>
+      <th>Description</th>
+      <th>Stopcode</th>
+      <th>Resultcode</th>
+      <th>Dir</th>
+      <th>Nfs</th>
+      <th>Checkpoint</th>
+      <th>Logpath</th>
+      <th>Lognfs</th>
+      <th>Logepk</th>
+      <th>Logcluster</th>
+      <th>Lognode</th>
+      <th>Portioncluster</th>
+      <th>Portionnode</th>
+      <th>Portionprogram</th>
+      <th>Parameters</th>
+      <th>Parametersdescription</th>
+      <th>Profiles</th>
+      <th>Profilesdescription</th>
+      <th>Otherparams</th>
+      <th>Userid</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @templates.each do |template| %>
+      <tr>
+        <td><%= template.taskName %></td>
+        <td><%= template.taskDescription %></td>
+        <td><%= template.passportName %></td>
+        <td><%= template.name %></td>
+        <td><%= template.procNum %></td>
+        <td><%= template.maxTime %></td>
+        <td><%= template.historyenabled %></td>
+        <td><%= template.description %></td>
+        <td><%= template.stopcode %></td>
+        <td><%= template.resultcode %></td>
+        <td><%= template.dir %></td>
+        <td><%= template.nfs %></td>
+        <td><%= template.checkpoint %></td>
+        <td><%= template.logPath %></td>
+        <td><%= template.logNfs %></td>
+        <td><%= template.logEpk %></td>
+        <td><%= template.logCluster %></td>
+        <td><%= template.logNode %></td>
+        <td><%= template.portionCluster %></td>
+        <td><%= template.portionNode %></td>
+        <td><%= template.portionProgram %></td>
+        <td><%= template.parameters %></td>
+        <td><%= template.parametersDescription %></td>
+        <td><%= template.profiles %></td>
+        <td><%= template.profilesDescription %></td>
+        <td><%= template.otherParams %></td>
+        <td><%= template.userId %></td>
+        <td><%= link_to 'Show', template %></td>
+        <td><%= link_to 'Edit', edit_template_path(template) %></td>
+        <td><%= link_to 'Destroy', template, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Template', new_template_path %>

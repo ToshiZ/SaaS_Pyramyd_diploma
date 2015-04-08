@@ -1,0 +1,14 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Filename:</strong>
+  <%= @passport.fileName %>
+</p>
+
+<p>
+  <strong>Taskname:</strong>
+  <%= @passport.taskName %>
+</p>
+
+<%= link_to 'Edit', edit_passport_path(@passport) %> |
+<%= link_to 'Back', passports_path %>

@@ -1,0 +1,57 @@
+<div ng-show="task" ng-init="getInf()" class="span12">
+	<h1>Задание: {{task.name}}</h1>	
+	 <div class="animate-switch-container"
+    	ng-switch on="task.status_suppz">
+	      <div class="animate-switch" ng-switch-when="run"><h3>Статус: На выполнении</h3></div>
+	      <div class="animate-switch" ng-switch-when="queue"><h3>Статус: В очереди</h3></div>
+	      <div class="animate-switch" ng-switch-when="block"><h3>Статус: Заблокировано</h3></div>
+	      <div class="animate-switch" ng-switch-when="finished"><h3>Статус: Завершено</h3></div>
+	      <div class="animate-switch" ng-switch-default></div>
+  	</div>
+  	<h3 ng-show="queuePeriod">Время до запуска: {{queuePeriod}} мин ({{startTime}})</h3>
+  	<!-- <h3 ng-show="startTime"></h3> -->
+  	<h3 ng-show="timeToFinish">Время до конца выполнения: {{timeToFinish}} мин ({{finishTime}})</h3>
+  	<!-- <h3 ng-show="finishTime"></h3> -->
+  	<h3 ng-show="blockFlag">Флаг блокировки: {{blockFlag}}</h3>
+  	<h3 ng-show="timeToStartBlock">Время до запуска: {{timeToStartBlock}} мин ({{startTimeBlock}})</h3>
+  	<!-- <h3 ng-show="startTimeBlock"></h3> -->
+  	<!-- <h3 ng-show="startTimeFin"></h3> -->
+
+	<div ng-show="task.status_suppz == 'run'" class="span14" >
+     	<div  class="accordion-group">
+			<div class="accordion-heading accordionize">
+		        <a  class="accordion-toggle" data-toggle="collapse" data-parent="#accordionArea">
+		           Состояние
+		        </a>
+		    </div>	
+		    <div class="accordion-body collapse">
+	            <div class="accordion-inner text">
+	         		{{task.work_status}}
+	            </div>
+	        </div>
+    	</div>
+	</div>	
+	<div  class="span14" >
+     	<div  class="accordion-group">
+			<div class="accordion-heading accordionize">
+		        <a  class="accordion-toggle" data-toggle="collapse" data-parent="#accordionArea">
+		           Результаты
+		        </a>
+		    </div>	
+		    <div class="accordion-body collapse">
+	            <div class="accordion-inner text">
+	         		{{task.stdout_rez}}
+	            </div>
+	        </div>
+    	</div>
+	</div>	
+	<div class="row">
+        	<div class="span12">
+            	<hr>
+            </div>
+        </div>
+	<button ng-show="task.status_suppz == 'run'" class="button" ng-click="stopTask('kill')">Остановить задание</button>
+	<button ng-show="task.status_suppz == 'queue' || task.status_suppz == 'block'" class="button" ng-click="stopTask('queue')">Удалить задание из очереди</button>
+	<button ng-show="task.status_suppz == 'finished'" class="button" ng-click="restartTask()">Перезапустить задание</button>
+	<button ng-show="task.status_suppz == 'finished'" class="button" ng-click="removeTask()">Удалить задание</button>
+</div>

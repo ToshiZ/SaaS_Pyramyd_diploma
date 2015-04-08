@@ -1,0 +1,39 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Task name:</strong>
+  <%= @user_tasks_info.task_name %>
+</p>
+
+<p>
+  <strong>Mqinfo:</strong>
+  <%= @user_tasks_info.mqinfo %>
+</p>
+
+<p>
+  <strong>Stdout rez:</strong>
+  <%= @user_tasks_info.stdout_rez %>
+</p>
+
+<p>
+  <strong>Work status:</strong>
+  <%= @user_tasks_info.work_status %>
+</p>
+
+<p>
+  <strong>Errors:</strong>
+  <%= @user_tasks_info.errors %>
+</p>
+
+<p>
+  <strong>Manager log:</strong>
+  <%= @user_tasks_info.manager_log %>
+</p>
+
+<p>
+  <strong>Output:</strong>
+  <%= @user_tasks_info.output %>
+</p>
+
+<%= link_to 'Edit', edit_user_tasks_info_path(@user_tasks_info) %> |
+<%= link_to 'Back', user_tasks_infos_path %>

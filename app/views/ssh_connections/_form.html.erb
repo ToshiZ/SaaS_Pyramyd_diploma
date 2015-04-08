@@ -1,0 +1,29 @@
+<%= form_for(@ssh_connection) do |f| %>
+  <% if @ssh_connection.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@ssh_connection.errors.count, "error") %> prohibited this ssh_connection from being saved:</h2>
+
+      <ul>
+      <% @ssh_connection.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :ip %><br>
+    <%= f.text_field :ip %>
+  </div>
+  <div class="field">
+    <%= f.label :login %><br>
+    <%= f.text_field :login %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

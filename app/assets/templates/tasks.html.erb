@@ -1,0 +1,61 @@
+<div ng-init="getInf()" class="alert alert-info fade in span6">
+	<p>Имя сервера: {{taskInfo.serv_name}}</p>
+	<p>Процессоры: {{taskInfo.proc_info}}</p>
+	<p>Заблокированные задания: {{taskInfo.block_tasks}}</p>
+	<p>Задания в очереди: {{taskInfo.queue_tasks}}</p>
+	<p>Задания на выполнении: {{taskInfo.run_tasks}}</p>
+	<p>Задания пользователя: {{taskInfo.user_info}}</p>
+	</div>
+	<div class="row"></div>
+	<!-- <div ng-show="runTasks.length" class="span14" >
+	<div ng-repeat="allTask in allTasks"  class="accordion-group">
+	    <div class="accordion-heading accordionize">
+	        <a  class="accordion-toggle" data-toggle="collapse" data-parent="#accordionArea">{{allTask.name}} </a>
+	    </div>  
+	   </div> 
+	</div> -->
+	<div ng-show="runTasks.length" class="span14" >
+		<h3>Задания на выполнении</h3>
+		<div ng-repeat="runTask in runTasks">
+	      	<div class="accordion-group inline">
+		        <div class="accordion-heading accordionize">
+		            <a href="/tasks/{{runTask.id}}"  class="accordion-toggle" data-toggle="collapse" data-parent="#accordionArea">{{runTask.name}}</a>
+		        </div>  
+	    	</div>
+		    <button class="button button-mini inline" ng-click="stopTask(runTask)">X</button>
+	    </div>
+	</div>  
+	<div ng-show="queuedTasks.length" class="span14" >
+		<h3>Задания в очереди</h3>
+		<div ng-repeat="queuedTask in queuedTasks">
+	      	<div class="accordion-group inline">
+		        <div class="accordion-heading accordionize">
+		            <a href="/tasks/{{queuedTask.id}}" class="accordion-toggle" data-toggle="collapse" data-parent="#accordionArea">{{queuedTask.name}}</a>
+		        </div>  
+	    	</div>
+	     	<button class="button button-mini inline" ng-click="stopTask(queuedTask)">X</button>
+	    </div>
+	</div>  
+	<div ng-show="blockTasks.length" class="span14" >
+	<h3>Заблокированные задания</h3>
+		<div ng-repeat="blockTask in blockTasks" >
+			<div  class="accordion-group inline">
+			    <div class="accordion-heading accordionize">
+			    	<a href="/tasks/{{blockTask.id}}" class="accordion-toggle" data-toggle="collapse" data-parent="#accordionArea">{{blockTask.name}}</a>
+				</div>  
+			</div>
+		    <button class="button button-mini inline" ng-click="stopTask(blockTask)">X</button>
+	    </div>
+	</div>  
+	<div ng-show="finishedTasks.length" class="span14" >
+	<h3>Завершенные задания</h3>
+		<div ng-repeat="finishedTask in finishedTasks">
+	      	<div class="accordion-group inline">
+		        <div class="accordion-heading accordionize">
+		            <a href="/tasks/{{finishedTask.id}}" class="accordion-toggle" data-toggle="collapse" data-parent="#accordionArea">{{finishedTask.name}}</a>
+		        </div>  	        
+	    	</div>
+	    	<button class="button button-mini inline" ng-click="removeTask(finishedTask)">X</button>
+	    </div>
+	</div>  
+</div>

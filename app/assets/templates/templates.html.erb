@@ -1,0 +1,185 @@
+<div ng-show="templates.length" class="span14" >
+      <div ng-repeat="template in templates"  class="accordion-group">
+        <div class="accordion-heading accordionize">
+            <a  class="accordion-toggle" data-toggle="collapse" data-parent="#accordionArea">{{template.taskName}}<span ng-click="removeTemplates(template)" class="font-icon-minus close"></span></a>
+        </div>  
+        <div class="accordion-body collapse">
+            <div class="accordion-inner">
+                  <!-- Start Tabs -->    
+        <h3 class="spec">Параметры задания</h3>
+        
+        <div class="tabbable">
+        
+            <ul class="nav nav-tabs" id="myTab{{template.id}}">
+                <li class="active"><a  data-tab="{{template.id}}tab1" >Параметры epkrun</a></li>
+                <li><a  data-tab="{{template.id}}tab2" >Соединение</a></li>
+                <li><a data-tab="{{template.id}}tab3" >Обязательные параметры паспорта.ini</a></li>
+                <li><a  data-tab="{{template.id}}tab4" >Необязательные параметры паспорта.ini</a></li>
+            </ul>
+         
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="{{template.id}}tab1">
+                   <form name='taskForm{{template.id}}'>
+                    <fieldset>
+                        <p>Имя задания
+                        <input ng-model="template.taskName" type="text" placeholder="test.opp"></input></p>
+                        <p>Имя паспорта задания
+                        <input ng-model="template.passportName" type="text" placeholder = "example.ini"></input></p>
+                         <p>Путь к рабочему каталогу задания
+                        <input  ng-model="template.dir" type="text" placeholder = "/home/decart"></input></p>
+                         <p>Количество процессоров
+                        <input ng-model="template.procNum" type="text" placeholder = "6"></input></p>
+                        <p>Максимальное время выполнения(мин)
+                        <input ng-model="template.maxTime" type="text" placeholder = "5"></input></p>
+                    </fieldset>
+                    <button id="button{{template.id}}" class="button button-small" ng-click="toConnections('button' +{{template.id}})">Запустить задание</button>
+                    <!-- <div ng-show="runInfo">{{runInfo}}</div> -->
+                    <!-- <div ng-dropdown-multiselect="" options="{{temp}}" selected-model="{{templates}}" extra-settings="{{displayProp: 'taskName'}}"></div> -->
+                </form>
+                </div>
+
+                 <div class="tab-pane fade" id="{{template.id}}tab2">
+                    <div class="span10" ng-repeat="connection in connections" >
+                        <div class="alert fade in">
+                            {{'Название:' + connection.name + "| Адрес: " + connection.ip}}
+                            <form ng-submit="runTask(connection, template)">
+                            <input ng-model="connection.pass" type="password" placeholder="Пароль"/>
+                            <button class="button button-small" type="submit">{{'Запуск задания'||sshParam.ready === true}}</button>
+                            </form>
+                            <!-- <span ng-show="runInfo">{{runInfo.info}}</span> -->
+                        </div>
+                    </div>
+                    
+                </div>
+
+
+                <div class="tab-pane fade" id="{{template.id}}tab3">
+                    <form ng-submit="runTask()" name='taskForm{{template.name}}'>
+                    <fieldset>
+                        <p>Идентификатор ОПП
+                        <input ng-model="template.name" type="text" placeholder = "my_script"></p>
+                          <p>Путь к рабочему каталогу задания
+                        <input  ng-model="template.dir" type="text" placeholder = "/home/decart"></input></p>
+                        <p>Рабочий каталог задания расположен в общей файловой системе 
+                        <input  ng-model="template.nfs" type="checkBox"></input></p>
+                        <p>Размеры вычислительной работы, выделяемой центральным сервером кластеру
+                        <input ng-model="template.portionCluster" type="text" placeholder = "16"></p>
+                        <p>Размеры вычислительной работы, выделяемой кластером вычислительному модулю 
+                        <input ng-model="template.portionNode" type="text" placeholder = "4"></p>
+                        <p>Размеры вычислительной работы, выделяемой модулем одной последовательной 
+                        <input ng-model="template.portionProgram" type="text" placeholder = "2"></p>
+                    </fieldset>
+
+                    <button class="button button-small" ng-click="runTask()">Запустить задание</button>
+                    <!-- <div ng-show="runInfo">{{runInfo}}</div> -->
+                      </form>
+                </div>
+                <div class="tab-pane fade" id="{{template.id}}tab4">
+                             <form ng-submit="runTask()" name='taskForm{{template.name}}'>
+                    <fieldset>
+                        <p>Ведение истории 
+                        <input ng-model="template.historyenabled" type="checkBox"></p>
+                          <p>Описание сценария
+                        <input ng-model="template.description"  type="text" placeholder = "my_script"></input></p>
+                        <p>Значение кода возврата ОПП(завершена работа ПК)
+                        <input ng-model="template.stopcode"  type="text" placeholder = "1"></input></p>
+                        <p>Значение кода возврата ОПП(завершена работа ПК с результатом)
+                        <input ng-model="template.resultcode" type="text" placeholder = "2"></p>
+                        <p>Периодичность сохранения контрольных точек
+                        <input ng-model="template.checkpoint" type="text" placeholder = "10"></p>
+                    </fieldset>
+                    <button class="button button-small" ng-click="runTask()">Запустить задание</button>
+                    <!-- <div ng-show="runInfo">{{runInfo}}</div> -->
+                      </form>
+                </div>
+            </div>
+                    
+        </div>
+    <!-- End Tabs -->
+            </div>
+        </div>
+    </div>
+</div>  
+<!-- ДОБАВИТ НОВЫЙ -->
+<div  class="span14" >
+      <div  class="accordion-group">
+		<div class="accordion-heading accordionize">
+	        <a  class="accordion-toggle" data-toggle="collapse" data-parent="#accordionArea">
+	           Создать шаблон<span class="font-icon-minus"></span><span class="font-icon-plus"></span>
+	        </a>
+	    </div>	
+	    <div class="accordion-body collapse">
+            <div class="accordion-inner">
+                  <!-- Start Tabs -->    
+        <h3 class="spec">Параметры задания</h3>
+        
+        <div class="tabbable">
+        
+            <ul class="nav nav-tabs" id="myTab">
+                <li class="active"><a  data-tab="tab1" >Параметры epkrun</a></li>
+                <li><a data-tab="tab2" >Обязательные параметры паспорта.ini</a></li>
+                <li><a  data-tab="tab3" >Необязательные параметры паспорта.ini</a></li>
+            </ul>
+         
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="tab1">
+                   <form ng-submit="addTemplate()" name='templateForm'>
+                    <fieldset>
+                        <p>Имя задания
+                        <input ng-model="newTask.taskName" type="text" placeholder="test.opp"/></p>
+                        <p>Имя паспорта задания
+                        <input ng-model="newTask.passportName" type="text" placeholder="example.ini"/></p>
+                         <p>Путь к рабочему каталогу задания
+                        <input  ng-model="newTask.dir" type="text" placeholder = "/home/decart"></input></p>
+                         <p>Количество процессоров
+                        <input ng-model="newTask.procNum" type="text" placeholder="6"/></p>
+                        <p>Максимальное время выполнения(мин)
+                        <input ng-model="newTask.maxTime" type="text" placeholder="5"/></p>                       
+                     </fieldset>
+                     <button class="button button-small" type="submit">Добавить</button>                    
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="tab2">
+                     <form ng-submit="addTemplate()" name='templateForm'>
+                        <fieldset>
+                            <p>Идентификатор ОПП
+                            <input ng-model="newTask.name" type="text" placeholder="my_script"/></p>
+                            <p>Путь к рабочему каталогу задания
+                            <input ng-model="newTask.dir" type="text" placeholder="/home/decart"/></p>
+                            <p>Рабочий каталог задания расположен в общей файловой системе 
+                            <input  ng-model="newTask.nfs" type="checkBox" value="false"/></p>
+                            <p>Размеры вычислительной работы, выделяемой центральным сервером кластеру
+                            <input ng-model="newTask.portionCluster" type="text" placeholder="16"/></p>
+                            <p>Размеры вычислительной работы, выделяемой кластером вычислительному модулю
+                            <input ng-model="newTask.portionNode" type="text" placeholder="5"/></p> 
+                            <p>Размеры вычислительной работы, выделяемой модулем одной последовательной
+                            <input ng-model="newTask.portionProgram" type="text" placeholder="2"/></p>                       
+                        </fieldset>
+                        <button class="button button-small" type="submit">Добавить</button>                    
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="tab3">
+                    <form ng-submit="addTemplate()" name='templateForm'>
+                        <fieldset>
+                            <p>Ведение истории
+                            <input ng-model="newTask.historyenabled" type="checkBox" value="false"/></p>
+                            <p>Описание сценария
+                            <input ng-model="newTask.description" type="text" placeholder="my_script"/></p>
+                            <p>Значение кода возврата ОПП(завершена работа ПК) 
+                            <input  ng-model="newTask.stopcode" type="text" placeholder = "1"/></p>
+                            <p>Значение кода возврата ОПП(завершена работа ПК с результатом)
+                            <input ng-model="newTask.resultcode" type="text" placeholder="2"/></p>
+                            <p>Периодичность сохранения контрольных точек
+                            <input ng-model="newTask.checkpoint" type="text" placeholder="15"/></p>                  
+                        </fieldset>
+                        <button class="button button-small" type="submit">Добавить</button>                    
+                    </form>
+                </div>
+            </div>
+                    
+        </div>
+    <!-- End Tabs -->
+            </div>
+        </div>
+    </div>
+</div>	

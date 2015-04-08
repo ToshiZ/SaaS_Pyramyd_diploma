@@ -1,0 +1,125 @@
+<%= form_for(@template) do |f| %>
+  <% if @template.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@template.errors.count, "error") %> prohibited this template from being saved:</h2>
+
+      <ul>
+      <% @template.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :taskName %><br>
+    <%= f.text_field :taskName %>
+  </div>
+  <div class="field">
+    <%= f.label :taskDescription %><br>
+    <%= f.text_field :taskDescription %>
+  </div>
+  <div class="field">
+    <%= f.label :passportName %><br>
+    <%= f.text_field :passportName %>
+  </div>
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :procNum %><br>
+    <%= f.number_field :procNum %>
+  </div>
+  <div class="field">
+    <%= f.label :maxTime %><br>
+    <%= f.number_field :maxTime %>
+  </div>
+  <div class="field">
+    <%= f.label :historyenabled %><br>
+    <%= f.check_box :historyenabled %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_field :description %>
+  </div>
+  <div class="field">
+    <%= f.label :stopcode %><br>
+    <%= f.number_field :stopcode %>
+  </div>
+  <div class="field">
+    <%= f.label :resultcode %><br>
+    <%= f.number_field :resultcode %>
+  </div>
+  <div class="field">
+    <%= f.label :dir %><br>
+    <%= f.text_field :dir %>
+  </div>
+  <div class="field">
+    <%= f.label :nfs %><br>
+    <%= f.check_box :nfs %>
+  </div>
+  <div class="field">
+    <%= f.label :checkpoint %><br>
+    <%= f.number_field :checkpoint %>
+  </div>
+  <div class="field">
+    <%= f.label :logPath %><br>
+    <%= f.text_field :logPath %>
+  </div>
+  <div class="field">
+    <%= f.label :logNfs %><br>
+    <%= f.check_box :logNfs %>
+  </div>
+  <div class="field">
+    <%= f.label :logEpk %><br>
+    <%= f.check_box :logEpk %>
+  </div>
+  <div class="field">
+    <%= f.label :logCluster %><br>
+    <%= f.check_box :logCluster %>
+  </div>
+  <div class="field">
+    <%= f.label :logNode %><br>
+    <%= f.check_box :logNode %>
+  </div>
+  <div class="field">
+    <%= f.label :portionCluster %><br>
+    <%= f.number_field :portionCluster %>
+  </div>
+  <div class="field">
+    <%= f.label :portionNode %><br>
+    <%= f.number_field :portionNode %>
+  </div>
+  <div class="field">
+    <%= f.label :portionProgram %><br>
+    <%= f.number_field :portionProgram %>
+  </div>
+  <div class="field">
+    <%= f.label :parameters %><br>
+    <%= f.text_field :parameters %>
+  </div>
+  <div class="field">
+    <%= f.label :parametersDescription %><br>
+    <%= f.text_field :parametersDescription %>
+  </div>
+  <div class="field">
+    <%= f.label :profiles %><br>
+    <%= f.text_field :profiles %>
+  </div>
+  <div class="field">
+    <%= f.label :profilesDescription %><br>
+    <%= f.text_field :profilesDescription %>
+  </div>
+  <div class="field">
+    <%= f.label :otherParams %><br>
+    <%= f.text_field :otherParams %>
+  </div>
+  <div class="field">
+    <%= f.label :userId %><br>
+    <%= f.number_field :userId %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

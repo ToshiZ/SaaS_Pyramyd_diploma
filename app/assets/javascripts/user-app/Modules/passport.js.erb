@@ -1,0 +1,49 @@
+'use strict';
+var pyramidApp = angular.module('pyramidApp', ['ngAnimate',
+    'ngCookies',
+    'ngResource',
+    'ngRoute',
+    'ngSanitize',
+    'ngTouch',
+    'Devise']);
+pyramidApp.config(['$routeProvider', '$locationProvider',function ($routeProvider, $locationProvider) {
+		  $locationProvider.html5Mode(true);
+		  $routeProvider
+		    .when('/user_app/templates',
+		      { templateUrl: "<%= asset_path('templates.html') %>",
+		        controller: "TemplatesCtrl" })
+		    .when('/user_app/connections',
+		      { templateUrl: "<%= asset_path('connections.html') %>",
+		        controller: "ConnectionsCtrl" })
+		    .when('/user_app/tasks',
+		      { templateUrl: "<%= asset_path('tasks.html') %>",
+		        controller: "TasksCtrl" })
+		    .when('/user_app/tasks/:taskId',
+		      { templateUrl: "<%= asset_path('tasksDetails.html') %>",
+		        controller: "TaskDetailsCtrl" })
+		    .otherwise({ redirectTo: '/user_app/' });
+	}]);
+pyramidApp.factory('Connections', ['$resource', function($resource) {
+  return $resource('/user_app/ssh_connections/:id.json', null, {
+  });
+}]);
+pyramidApp.factory('Tasks', ['$resource', function($resource) {
+  return $resource('/user_app/tasks/:id.json', null, {
+  });
+}]);
+pyramidApp.factory('Templates', ['$resource', function($resource) {
+  return $resource('/user_app/templates/:id.json', null, {
+  });
+}]);
+pyramidApp.factory('SshCon', ['$resource', function($resource) {
+  return $resource('/user_app/ssh_actions/:name/:password');
+}]);
+pyramidApp.factory('GetInf', ['$resource', function($resource) {
+  return $resource('/user_app/getinf/:name/:password/:command');
+}]);
+pyramidApp.factory('GetOutputs', ['$resource', function($resource) {
+  return $resource('/user_app/getOutputs/:name/:password/:task_name');
+}]);
+// pyramidApp.factory('RunCommand', ['$resource', function($resource) {
+//   return $resource('/run_command/:name/:type_dell');
+// }]);

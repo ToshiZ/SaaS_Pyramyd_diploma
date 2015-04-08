@@ -1,0 +1,2 @@
+module SshActionsHelper
+end
