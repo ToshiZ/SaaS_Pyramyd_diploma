@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150319031445) do
+ActiveRecord::Schema.define(version: 20150319205457) do
 
   create_table "admins", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -154,5 +154,13 @@ ActiveRecord::Schema.define(version: 20150319031445) do
 
   add_index "users_connections", ["ssh_connection_id"], name: "index_users_connections_on_ssh_connection_id"
   add_index "users_connections", ["user_id"], name: "index_users_connections_on_user_id"
+
+  create_table "users_ssh_connections", id: false, force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "ssh_connection_id"
+  end
+
+  add_index "users_ssh_connections", ["ssh_connection_id"], name: "index_users_ssh_connections_on_ssh_connection_id"
+  add_index "users_ssh_connections", ["user_id"], name: "index_users_ssh_connections_on_user_id"
 
 end

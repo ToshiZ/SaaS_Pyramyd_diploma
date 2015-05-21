@@ -1,0 +1,49 @@
+'use strict';
+angular.module('pyramidAppAdmin')
+	.controller('TemplatesCtrl',['$scope', 'GetInf',  'Templates', 'Connections', '$http', '$location', function($scope, GetInf, Templates,  Connections, $http, $location){
+		// /$scope.runInfo = {};
+		//$scope.getTemplates = function(){
+		// $scope.getTemplates = Templates.query(function(resp){
+		// 		$scope.templates = resp;
+		// 	});
+		$scope.connections = Connections.query();
+		$scope.templates = Templates.query();
+		//};
+		// $scope.load = $http.get('/passports.json').success(function(data){
+		// 	$scope.passports = data;
+		// });
+		$scope.addTemplate = function(){
+		var task = new Templates($scope.newTask);
+		//$scope.sshParams.push(con);
+		task.$save(function(){
+			$scope.templates.push(task);
+		},function(response){
+			 $scope.errors = response.data.errors;
+		});
+	};
+	$scope.removeTemplates = function(template){
+		  Templates.remove({id: template.id}, function() {
+            //If successful, remove it from our collection
+            $scope.templates.splice($scope.templates.indexOf(template), 1);
+        });
+	};
+	$scope.runTask = function(connection, template){
+		var res = $http.post('/run_command/:params', {name: connection.name, password: connection.pass, command: template});
+		res.success(function(data, status, headers, config) {
+			$scope.runInfo = data;
+			//var tsks = JSON.parse(localStorage.getItem('runnTasks')) || [];
+			// tsks.push({"name":  $scope.runInfo.info[2].split('"')[1], "tskParams": template, "runInfo" :data, "connection": connection});
+			// localStorage.setItem('runnTasks', JSON.stringify(tsks));
+			connection.pass = '';
+		});
+		// GetInf.save({name: connection.name, password: connection.pass, command: template}, function(resp){
+		// 		$scope.runInfo = resp;
+		// });
+	};
+	$scope.toConnections = function(obj){
+		var els = $('#' + obj).closest('li.active, div.active');
+		els.removeClass('active'); 
+		els.next().addClass('active'); 
+	};
+}]);
+

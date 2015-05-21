@@ -1,0 +1,8 @@
+'use strict';
+angular.module('pyramidAppAdmin')
+	.controller('UserConCtrl', ['$scope','Users', 'Connections', function($scope, Users, Connections){
+		$scope.getUsers = function(){
+			$scope.users = Users.query();
+			$scope.sshParams = Connections.query();
+		};
+	}]);

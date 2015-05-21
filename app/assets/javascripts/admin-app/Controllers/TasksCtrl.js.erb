@@ -1,0 +1,64 @@
+'use strict';
+angular.module('pyramidAppAdmin')
+	.controller('TasksCtrl',['$scope', 'Tasks', '$interval', 'GetInf', 'GetOutputs', 'Templates', '$http', '$location', function($scope, Tasks, $interval, GetInf, GetOutputs, Templates, $http, $location){
+		var refreshTimer;
+		$scope.getInf = function(){
+			$scope.allTasks = [];
+			combiner();
+			refreshTimer = $interval(combiner, 2000);
+		};
+		// $scope.getOutputs = function(task){
+		// 	GetOutputs.get({name: 'Head', password: 'user', task_name: task.name.replace(/\./g, "_")}, function(resp){
+		// 		//$scope.taskInfo = resp;		
+		// 		//console.log(resp);
+		// 		task['managerLog'] = resp.info;
+		// 	});
+		// };
+		$scope.stopTask = function(tsk){
+			var typeDell = tsk.status_suppz == 'run'? 'kill': 'queue';
+			var res = $http.post('/dell_task/:params', {name: 'Head', password: 'user', type_dell: typeDell, 'task_name': tsk.name});
+			res.success(function(data, status, headers, config) {
+			});
+		};
+		$scope.removeTask = function(tsk){
+		  Tasks.remove({id: tsk.id}, function() {
+        	});		
+		};
+		$scope.$on("$destroy", function(){
+        	$scope.stopInterval();
+    	});
+    	 $scope.stopInterval = function() {
+          if (angular.isDefined(refreshTimer)) {
+            $interval.cancel(refreshTimer);
+            refreshTimer = undefined;
+          }
+        };
+         function findPurpose(purposeName, purposeObjects){
+   		 	return $.grep(purposeObjects, function(item){
+       			return item.purpose == purposeName;
+    		});
+		};
+		function combiner(){
+			GetInf.get({name: 'Head', password: 'user'}, function(resp){
+				Tasks.query(function(resp){
+					$scope.allTasks = resp
+				});
+				$scope.queuedTasks = [];
+				$scope.runTasks = [];
+				$scope.blockTasks = [];
+				$scope.finishedTasks = [];
+				$scope.taskInfo = resp;
+				for(var tsk in $scope.allTasks){
+					if($scope.allTasks[tsk].status_suppz == 'run')
+						$scope.runTasks.push($scope.allTasks[tsk]);
+					if($scope.allTasks[tsk].status_suppz == 'queue')
+						$scope.queuedTasks.push($scope.allTasks[tsk]);
+					if($scope.allTasks[tsk].status_suppz == 'block')
+						$scope.blockTasks.push($scope.allTasks[tsk]);
+					if($scope.allTasks[tsk].status_suppz == 'finished')
+						$scope.finishedTasks.push($scope.allTasks[tsk]);
+				}
+			});
+		}
+}]);
+

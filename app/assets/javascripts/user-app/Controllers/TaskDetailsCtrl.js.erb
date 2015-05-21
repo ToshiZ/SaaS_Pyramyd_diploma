@@ -21,7 +21,7 @@ angular.module('pyramidApp')
         	});		
 		};
 		$scope.stopTask = function(typeDell){
-			var res = $http.post('/dell_task/:params', {name: 'Head', password: 'user', type_dell: typeDell, 'task_name': $scope.task.name});
+			var res = $http.post('/user_app/tasks/:id/dell_task/:params', {name: 'Head', password: 'user', type_dell: typeDell, 'task_name': $scope.task.name});
 			res.success(function(data, status, headers, config) {
 			});
 		};

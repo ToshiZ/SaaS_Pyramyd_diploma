@@ -27,8 +27,8 @@ angular.module('pyramidApp')
             $scope.templates.splice($scope.templates.indexOf(template), 1);
         });
 	};
-	$scope.runTask = function(connection, template){
-		var res = $http.post('/run_command/:params', {name: connection.name, password: connection.pass, command: template});
+	$scope.runTask = function(template){
+		var res = $http.post('/user_app/templates/run_command/:params', {name: 'Head', password: 'user', command: template});
 		res.success(function(data, status, headers, config) {
 			$scope.runInfo = data;
 			//var tsks = JSON.parse(localStorage.getItem('runnTasks')) || [];

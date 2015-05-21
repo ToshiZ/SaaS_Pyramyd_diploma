@@ -1,0 +1,54 @@
+'use strict';
+angular.module('pyramidAppAdmin')
+	.controller('TaskDetailsCtrl',['$scope', '$routeParams', 'Tasks', '$interval', 'GetInf', 'GetOutputs', 'Templates', '$http', '$location', function($scope, $routeParams, Tasks, $interval, GetInf, GetOutputs, Templates, $http, $location){
+		var refreshTimer;
+		$scope.taskId = $routeParams.taskId;
+		$scope.getInf = function(){
+			combiner();
+			refreshTimer = $interval(combiner, 2000);
+		}
+		$scope.$on("$destroy", function(){
+    		$scope.stopInterval();
+		});
+	 	$scope.stopInterval = function() {
+      		if (angular.isDefined(refreshTimer)) {
+        		$interval.cancel(refreshTimer);
+        		refreshTimer = undefined;
+      		}
+    	};
+    	$scope.removeTask = function(){
+		  Tasks.remove({id: $scope.taskId}, function() {
+        	});		
+		};
+		$scope.stopTask = function(typeDell){
+			var res = $http.post('/dell_task/:params', {name: 'Head', password: 'user', type_dell: typeDell, 'task_name': $scope.task.name});
+			res.success(function(data, status, headers, config) {
+			});
+		};
+		function combiner(){
+			GetInf.get({name: 'Head', password: 'user'});
+			Tasks.get({id: $scope.taskId}, function(resp){
+				$scope.task = resp;
+				if($scope.task.status_suppz == 'queue'){
+					$scope.queuePeriod = $scope.task.mqinfo.split('~')[1].split(' ')[0];
+					$scope.startTime = $scope.task.mqinfo.split('<:')[1];
+				}
+				if($scope.task.status_suppz == 'run'){
+					$scope.timeToFinish = $scope.task.mqinfo.split(' ')[22];
+					$scope.finishTime = $scope.task.mqinfo.split('>:')[1];
+				}
+				if($scope.task.status_suppz == 'block'){
+					$scope.blockFlag = $scope.task.mqinfo.split('~~~')[0].split(' ');
+					$scope.timeToStartBlock = $scope.blockFlag[$scope.blockFlag.length - 1];
+					$scope.startTimeBlock = $scope.task.mqinfo.split('>:')[1];
+				}
+				if($scope.task.status_suppz == 'finished'){
+					//$scope.blockFlag = $scope.task.mqinfo.split('~~~')[0].split(' ');
+					//$scope.blockFlag = $scope.blockFlag[$scope.blockFlag.length - 1];
+					//$scope.startTimeFin = $scope.task.mqinfo.split('>:')[1];
+				}
+			},function(){
+				$location.path('/tasks');
+			});
+		}
+	}]);

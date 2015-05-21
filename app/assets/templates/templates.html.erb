@@ -12,7 +12,7 @@
         
             <ul class="nav nav-tabs" id="myTab{{template.id}}">
                 <li class="active"><a  data-tab="{{template.id}}tab1" >Параметры epkrun</a></li>
-                <li><a  data-tab="{{template.id}}tab2" >Соединение</a></li>
+                <!-- <li><a  data-tab="{{template.id}}tab2" >Соединение</a></li> -->
                 <li><a data-tab="{{template.id}}tab3" >Обязательные параметры паспорта.ini</a></li>
                 <li><a  data-tab="{{template.id}}tab4" >Необязательные параметры паспорта.ini</a></li>
             </ul>
@@ -32,13 +32,13 @@
                         <p>Максимальное время выполнения(мин)
                         <input ng-model="template.maxTime" type="text" placeholder = "5"></input></p>
                     </fieldset>
-                    <button id="button{{template.id}}" class="button button-small" ng-click="toConnections('button' +{{template.id}})">Запустить задание</button>
+                    <button id="button{{template.id}}" class="button button-small" ng-click="runTask(template)">Запустить задание</button>
                     <!-- <div ng-show="runInfo">{{runInfo}}</div> -->
                     <!-- <div ng-dropdown-multiselect="" options="{{temp}}" selected-model="{{templates}}" extra-settings="{{displayProp: 'taskName'}}"></div> -->
                 </form>
                 </div>
 
-                 <div class="tab-pane fade" id="{{template.id}}tab2">
+                <!--  <div class="tab-pane fade" id="{{template.id}}tab2">
                     <div class="span10" ng-repeat="connection in connections" >
                         <div class="alert fade in">
                             {{'Название:' + connection.name + "| Адрес: " + connection.ip}}
@@ -46,11 +46,11 @@
                             <input ng-model="connection.pass" type="password" placeholder="Пароль"/>
                             <button class="button button-small" type="submit">{{'Запуск задания'||sshParam.ready === true}}</button>
                             </form>
-                            <!-- <span ng-show="runInfo">{{runInfo.info}}</span> -->
+                            <span ng-show="runInfo">{{runInfo.info}}</span>
                         </div>
                     </div>
                     
-                </div>
+                </div> -->
 
 
                 <div class="tab-pane fade" id="{{template.id}}tab3">

@@ -1,14 +1,15 @@
 
 //= require toshiZ_js/jquery
-//= require angular/devise
 //= require angular/angular
 //= require angular/angular-route
+//= require angular/angular-ui-router
 //= require angular/angular-resource
 //= require angular/angular-animate
 //= require angular/angular-cookies
 //= require angular/angular-sanitize
 //= require angular/angular-sanitize
 //= require angular/angular-touch
+//= require angular/devise
 //= require angular/angularjs-dropdown-multiselect
 //= require toshiZ_js/modernizr
 //= require toshiZ_js/bootstrap.min

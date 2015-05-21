@@ -37,3 +37,6 @@ gem 'thin'
 gem 'net-ssh'
 gem 'net-ssh-shell'
 gem 'devise'
+source "http://rails-assets.org" do
+  gem "rails-assets-angular-devise"
+end

@@ -1,0 +1,2 @@
+module AdminAppHelper
+end

@@ -1,0 +1,19 @@
+<div ng-init="getUsers()" ng-show="users.length" class="span14" >
+      <div ng-repeat="user in users"  class="accordion-group">
+        <div class="accordion-heading accordionize">
+            <a  class="accordion-toggle" data-toggle="collapse" data-parent="#accordionArea">{{user.email}}<span ng-click="removeTemplates(template)"></span></a>
+        </div>  
+        <div class="accordion-body collapse">
+            <div class="accordion-inner">
+                  <!-- Start Tabs -->    
+                <div class="span6 alert alert-standard fade in" ng-repeat="sshParam in sshParams" >
+                        {{'Название:' + sshParam.name + "| Адрес: " + sshParam.ip}}
+                </div>    
+                    
+                </div> 
+
+            </div>
+                    
+        </div>
+    <!-- End Tabs -->
+    </div>

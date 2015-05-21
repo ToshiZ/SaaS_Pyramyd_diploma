@@ -1,0 +1,73 @@
+'use strict';
+angular.module('pyramidAppAdmin')
+	.controller('ConnectionsCtrl', ['$scope','GetInf', 'Connections', 'SshCon','$http', function($scope, GetInf, Connections, SshCon, $http){
+	$scope.sshParams = Connections.query();
+	$scope.addConnection = function(){
+		var con = new Connections($scope.newSshParams);
+		con.$save(function(){
+			$scope.sshParams.push(con);
+		},function(response){
+			 $scope.errors = response.data.errors;
+		});
+	};
+	// $scope.load = $http.get('/SshConnections.json').success(function(data){
+	// 	$scope.sshParams = data;
+	// });
+	$scope.removeConnection = function(sshParam){
+		  Connections.remove({id: sshParam.id}, function() {
+            //If successful, remove it from our collection
+            $scope.sshParams.splice($scope.sshParams.indexOf(sshParam), 1);
+        });
+	};
+	$scope.testConnection = function(sshParam){
+		//GetInf.get({name: sshParam.name, password: 'user'});
+	SshCon.get({name: sshParam.name, password: sshParam.pass}, function(resp){
+				sshParam.ready = resp.success;});// return $http.get('/ssh_actions/testConnection/' + sshParam.name)
+		// 	.success(function(custs){
+		// 		sshParam.ready = cust;
+		// }).error(function(){});
+			};
+		//if(sshConnection.$valid){
+		// 	var req = {
+		// 			method: 'GET',
+		// 			url: '/ssh_connections#testConnection',
+		// 			headers: {
+		// 			   'Content-Type': "application/json"
+		// 			 	},
+		// 			data: { name: sshParam.name, ip: sshParam.ip, login: sshParam.login, password: sshParam.pass}
+		// 		};
+		// //}
+		// $http(req)
+		// 	.success(function(data){
+		// 		sshParam.ready = data.success;
+		// 		console.log(data);
+		// 	})	
+		// 	.error(function(data){
+		// 		console.log(data);
+		// 	});
+	
+	// $scope.addConnection = function(){		
+	// 	if(sshConnection.$valid){
+	// 		$scope.sshParams.push(newSshParams);
+	// 	// 	var req = {
+	// 	// 			method: 'POST',
+	// 	// 			url: 'SshConnections/ssh_connections.json',
+	// 	// 			headers: {
+	// 	// 			   'Content-Type': "application/json"
+	// 	// 			 	},
+	// 	// 			data: { name: newSshParams.namr, sshIp: newSshParams.sshIp, sshLogin: newSshParams.sshLogin, sshPass: newSshParams.sshPass}
+	// 	// 		};
+	// 	// }
+	// 	// $http(req)
+	// 	// 	.success(function(data){
+	// 	// 		//passport.response = data;
+	// 	// 		$scope.load();
+	// 	// 		console.log(data);
+	// 	// 	})
+	// 	// 	.error(function(data){
+	// 	// 		console.log(data);
+	// 	// 	});
+	// 	}
+	// }
+}]);
+

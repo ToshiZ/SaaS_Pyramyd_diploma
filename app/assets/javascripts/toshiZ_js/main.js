@@ -451,6 +451,19 @@ $(document).ready(function(){
 		$(this).parent().parent().next().find('#' + $(this).attr('data-tab')).addClass('active in');
 		
 	});
+	$(document).on('click','.alert', function (e) {
+		if(e.target == this){
+			if($(this).hasClass('alert-standard')){
+				$(this)
+					.removeClass('alert-standard')
+					.addClass('alert-error');
+			}else{
+				$(this)
+					.removeClass('alert-error')
+					.addClass('alert-standard');
+			}
+		}
+	});
 	
 		
 	BRUSHED.nav();

@@ -1,0 +1,22 @@
+'use strict';
+angular.module('pyramidApp')
+	.controller('MainCtrl',['$scope', 'Auth', '$location', function($scope, Auth, $location){
+		// Auth.logout().then(function(oldUser) {
+  //           // alert(oldUser.name + "you're signed out now.");
+  //       }, function(error) {
+  //           // An error occurred logging out.
+  //       });
+		 // Auth.currentUser().then(function(user) {
+   //          console.log(user); // => {id: 1, ect: '...'}
+   //      }, function(error) {
+   //          // unauthenticated error
+   //      });
+		$scope.logOut = function(){
+			Auth.logout().then(function(oldUser) {
+				$location.path('/users/sign_up')	        
+	        }, function(error) {
+	            // An error occurred logging out.
+	        });
+		};
+	}]);
+	

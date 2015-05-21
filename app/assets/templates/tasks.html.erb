@@ -19,7 +19,7 @@
 		<div ng-repeat="runTask in runTasks">
 	      	<div class="accordion-group inline">
 		        <div class="accordion-heading accordionize">
-		            <a href="/tasks/{{runTask.id}}"  class="accordion-toggle" data-toggle="collapse" data-parent="#accordionArea">{{runTask.name}}</a>
+		            <a href="/user_app/tasks/{{runTask.id}}"  class="accordion-toggle" data-toggle="collapse" data-parent="#accordionArea">{{runTask.name}}</a>
 		        </div>  
 	    	</div>
 		    <button class="button button-mini inline" ng-click="stopTask(runTask)">X</button>
@@ -30,7 +30,7 @@
 		<div ng-repeat="queuedTask in queuedTasks">
 	      	<div class="accordion-group inline">
 		        <div class="accordion-heading accordionize">
-		            <a href="/tasks/{{queuedTask.id}}" class="accordion-toggle" data-toggle="collapse" data-parent="#accordionArea">{{queuedTask.name}}</a>
+		            <a href="/user_app/tasks/{{queuedTask.id}}" class="accordion-toggle" data-toggle="collapse" data-parent="#accordionArea">{{queuedTask.name}}</a>
 		        </div>  
 	    	</div>
 	     	<button class="button button-mini inline" ng-click="stopTask(queuedTask)">X</button>
@@ -41,7 +41,7 @@
 		<div ng-repeat="blockTask in blockTasks" >
 			<div  class="accordion-group inline">
 			    <div class="accordion-heading accordionize">
-			    	<a href="/tasks/{{blockTask.id}}" class="accordion-toggle" data-toggle="collapse" data-parent="#accordionArea">{{blockTask.name}}</a>
+			    	<a href="/user_app/tasks/{{blockTask.id}}" class="accordion-toggle" data-toggle="collapse" data-parent="#accordionArea">{{blockTask.name}}</a>
 				</div>  
 			</div>
 		    <button class="button button-mini inline" ng-click="stopTask(blockTask)">X</button>
@@ -52,7 +52,7 @@
 		<div ng-repeat="finishedTask in finishedTasks">
 	      	<div class="accordion-group inline">
 		        <div class="accordion-heading accordionize">
-		            <a href="/tasks/{{finishedTask.id}}" class="accordion-toggle" data-toggle="collapse" data-parent="#accordionArea">{{finishedTask.name}}</a>
+		            <a href="/user_app/tasks/{{finishedTask.id}}" class="accordion-toggle" data-toggle="collapse" data-parent="#accordionArea">{{finishedTask.name}}</a>
 		        </div>  	        
 	    	</div>
 	    	<button class="button button-mini inline" ng-click="removeTask(finishedTask)">X</button>

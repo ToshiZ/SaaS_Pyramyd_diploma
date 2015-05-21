@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'users/index'
+
   get 'admin_app/index'
 
   devise_for :admins
@@ -21,6 +23,8 @@ Rails.application.routes.draw do
   resources :user_tasks,  :path => '/admin_app/user_tasks'
 
   resources :ssh_connections,  :path => '/admin_app/ssh_connections'
+   resources :ssh_connections,  :path => '/admin_app/user_control/ssh_connections'
+      resources :ssh_connections,  :path => '/admin_app/connections/ssh_connections'
 
   resources :task_templates,  :path => '/admin_app/task_templates'
 
@@ -28,10 +32,15 @@ Rails.application.routes.draw do
 
   get 'user_app/ssh_actions/:name/:password' => 'ssh_actions#testConnection'
   get 'user_app/getinf/:name/:password/:command' => 'ssh_actions#runCommand'
+  get 'user_app/tasks/:id/getinf/:name/:password/:command' => 'ssh_actions#runCommand'
   get 'user_app/getOutputs/:name/:password/:task_name' => 'ssh_actions#get_outputs'
   post 'user_app/run_command/:params' => 'ssh_actions#runCommand'
   post 'user_app/dell_task/:params' => 'ssh_actions#dell_task'
   get 'user_app/getinf/:name/:password' => 'ssh_actions#getInfo'
+  get 'user_app/tasks/:id/getinf/:name/:password' => 'ssh_actions#getInfo'
+  post 'user_app/templates/run_command/:params' => 'ssh_actions#runCommand'
+  post 'user_app/tasks/dell_task/:params' => 'ssh_actions#dell_task'
+  post 'user_app/tasks/:id/dell_task/:params' => 'ssh_actions#dell_task'
 
   get 'admin_app/ssh_actions/:name/:password' => 'ssh_actions#testConnection'
   get 'admin_app/getinf/:name/:password/:command' => 'ssh_actions#runCommand'
