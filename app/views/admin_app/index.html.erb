@@ -23,8 +23,8 @@
                          <a ng-click="logOut()">Выйти</a>
                     <% end %>
                     </li>
-                 <li><% if admin_signed_in? %>
-                        <span>Здравствуйте, <%= current_admin.email %></span>
+                 <li><% if user_signed_in? %>
+                        <span>Здравствуйте, <%= current_user.email %></span>
                         <% end %></li>
 
             </ul>

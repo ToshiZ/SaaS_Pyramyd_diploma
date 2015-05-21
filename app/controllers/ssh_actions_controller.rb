@@ -1,10 +1,12 @@
 class SshActionsController < ApplicationController
   def testConnection
-    # puts params[:name]
-    # puts params[:password]
+    puts 1111111
+    puts params[:name]
+    puts params[:password]
     require 'rubygems'
     require 'net/ssh'
     require 'net/ssh/shell'
+    puts 1111111
    # render json: { name: params[:name], pass: params[:password]}
     passp = SshConnection.find_by name: params[:name]
     serv = passp.ip

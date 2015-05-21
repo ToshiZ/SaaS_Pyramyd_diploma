@@ -17,7 +17,8 @@ angular.module('pyramidAppAdmin')
       		}
     	};
     	$scope.removeTask = function(){
-		  Tasks.remove({id: $scope.taskId}, function() {
+		  	Tasks.remove({id: $scope.taskId}, function() {
+		  		window.location = '/user_app/tasks';
         	});		
 		};
 		$scope.stopTask = function(typeDell){

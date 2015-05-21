@@ -13,6 +13,7 @@ angular.module('pyramidAppAdmin')
    //      });
 		$scope.logOut = function(){
 			Auth.logout().then(function(oldUser) {
+				window.location = '/users/sign_in';
 	        }, function(error) {
 	            // An error occurred logging out.
 	        });
