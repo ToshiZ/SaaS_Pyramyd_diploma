@@ -3,9 +3,10 @@ var pyramidApp = angular.module('pyramidApp', ['ngAnimate',
     'ngCookies',
     'ngResource',
     'ngRoute',
-    'ngSanitize',
+    'ngSanitize',    
     'ngTouch',
-    'Devise']);
+    'Devise',
+    'ui.bootstrap']);
 pyramidApp.config(['$routeProvider', '$locationProvider',function ($routeProvider, $locationProvider) {
 		  $locationProvider.html5Mode(true);
 		  $routeProvider
@@ -44,6 +45,3 @@ pyramidApp.factory('GetInf', ['$resource', function($resource) {
 pyramidApp.factory('GetOutputs', ['$resource', function($resource) {
   return $resource('/user_app/getOutputs/:name/:password/:task_name');
 }]);
-// pyramidApp.factory('RunCommand', ['$resource', function($resource) {
-//   return $resource('/run_command/:name/:type_dell');
-// }]);

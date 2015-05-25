@@ -1,6 +1,7 @@
 
 //= require toshiZ_js/jquery
 //= require angular/angular
+//= require angular/ui-bootstrap-custom-tpls-0.13.0
 //= require angular/angular-route
 //= require angular/angular-ui-router
 //= require angular/angular-resource
