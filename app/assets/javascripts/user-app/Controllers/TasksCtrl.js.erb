@@ -5,7 +5,7 @@ angular.module('pyramidApp')
 		$scope.getInf = function(){
 			$scope.allTasks = [];
 			combiner();
-			refreshTimer = $interval(combiner, 2000);
+			refreshTimer = $interval(combiner, 1000);
 		};
 		// $scope.getOutputs = function(task){
 		// 	GetOutputs.get({name: 'Head', password: 'user', task_name: task.name.replace(/\./g, "_")}, function(resp){

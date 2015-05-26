@@ -28,7 +28,25 @@ angular.module('pyramidApp')
 		function combiner(){
 			GetInf.get({name: 'Head', password: 'user'});
 			Tasks.get({id: $scope.taskId}, function(resp){
-				$scope.task = resp;
+				$scope.task = resp;		
+				var work_stat = $scope.task.work_status.split('\"');
+
+				$scope.task.compite_work = work_stat[work_stat.indexOf('Completed work:') + 3].replace("\\","");
+				$scope.task.in_work = work_stat[work_stat.indexOf('Parts in work:') + 3].replace("\\","");
+				$scope.task.remained_work =	work_stat[work_stat.indexOf('Remained work:') + 3].replace("\\","");
+
+				$scope.task.compiled = $scope.task.compite_work.split(' ');
+				$scope.task.remained = $scope.task.remained_work.split(' ');
+				$scope.task.compiledSum = 0;
+				$scope.task.remainedSum = 0;
+				for(var i in $scope.task.compiled){
+					if(i%2 == 1)
+						$scope.task.compiledSum += parseInt($scope.task.compiled[i]);
+				}
+				for(var i in $scope.task.remained){
+					if(i%2 == 1)
+						$scope.task.remainedSum += parseInt($scope.task.remained[i]);
+				}
 				if($scope.task.status_suppz == 'queue'){
 					$scope.queuePeriod = $scope.task.mqinfo.split('~')[1].split(' ')[0];
 					$scope.startTime = $scope.task.mqinfo.split('<:')[1];
