@@ -44,4 +44,7 @@ pyramidApp.factory('GetInf', ['$resource', function($resource) {
 }]);
 pyramidApp.factory('GetOutputs', ['$resource', function($resource) {
   return $resource('/user_app/getOutputs/:name/:password/:task_name');
+  }]);
+ pyramidApp.factory('GetNodes', ['$resource', function($resource) {
+  return $resource('/user_app/tasks/:id/get_nodes/:name/:password');
 }]);

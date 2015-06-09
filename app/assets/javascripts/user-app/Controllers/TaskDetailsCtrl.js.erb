@@ -1,6 +1,6 @@
 'use strict';
 angular.module('pyramidApp')
-	.controller('TaskDetailsCtrl',['$scope', '$routeParams', 'Tasks', '$interval', 'GetInf', 'GetOutputs', 'Templates', '$http', '$location', function($scope, $routeParams, Tasks, $interval, GetInf, GetOutputs, Templates, $http, $location){
+	.controller('TaskDetailsCtrl',['$scope', '$routeParams', 'Tasks', '$interval', 'GetInf', 'GetOutputs', 'Templates', '$http', '$location', 'GetNodes', function($scope, $routeParams, Tasks, $interval, GetInf, GetOutputs, Templates, $http, $location, GetNodes){
 		var refreshTimer;
 		$scope.taskId = $routeParams.taskId;
 		$scope.getInf = function(){
@@ -26,26 +26,33 @@ angular.module('pyramidApp')
 			});
 		};
 		function combiner(){
-			GetInf.get({name: 'Head', password: 'user'});
+			GetInf.get({name: 'Head', password: 'user'});		
+
 			Tasks.get({id: $scope.taskId}, function(resp){
 				$scope.task = resp;		
 				var work_stat = $scope.task.work_status.split('\"');
 
 				$scope.task.compite_work = work_stat[work_stat.indexOf('Completed work:') + 3].replace("\\","");
 				$scope.task.in_work = work_stat[work_stat.indexOf('Parts in work:') + 3].replace("\\","");
-				$scope.task.remained_work =	work_stat[work_stat.indexOf('Remained work:') + 3].replace("\\","");
+				if(work_stat[work_stat.indexOf('Remained work:') + 3]){
+					$scope.task.remained_work =	work_stat[work_stat.indexOf('Remained work:') + 3].replace("\\","");
+					$scope.task.remained = $scope.task.remained_work.split(' ');
+				}
+				$scope.task.results = $scope.task.stdout_rez.split('", "------------", "');
 
 				$scope.task.compiled = $scope.task.compite_work.split(' ');
-				$scope.task.remained = $scope.task.remained_work.split(' ');
+				
 				$scope.task.compiledSum = 0;
 				$scope.task.remainedSum = 0;
 				for(var i in $scope.task.compiled){
 					if(i%2 == 1)
 						$scope.task.compiledSum += parseInt($scope.task.compiled[i]);
 				}
-				for(var i in $scope.task.remained){
-					if(i%2 == 1)
-						$scope.task.remainedSum += parseInt($scope.task.remained[i]);
+				if($scope.task.remainedSum == 0){
+					for(var i in $scope.task.remained){
+						if(i%2 == 1)
+							$scope.task.remainedSum += parseInt($scope.task.remained[i]);
+					}
 				}
 				if($scope.task.status_suppz == 'queue'){
 					$scope.queuePeriod = $scope.task.mqinfo.split('~')[1].split(' ')[0];
@@ -65,6 +72,41 @@ angular.module('pyramidApp')
 					//$scope.blockFlag = $scope.blockFlag[$scope.blockFlag.length - 1];
 					//$scope.startTimeFin = $scope.task.mqinfo.split('>:')[1];
 				}
+
+				GetNodes.get({id: $scope.taskId, name: 'Head', password: 'user'}, function(resp){
+					$scope.nodes = resp;
+					$scope.node = [];
+					$scope.nodes = $scope.nodes.info.split('==>');
+					$scope.nodes = $scope.nodes.splice(1, $scope.nodes.length);
+					for(var i in $scope.nodes){
+						var name = $scope.nodes[i].split('<==')[0].split(':')[0].split('/');
+						name = name[name.length - 1];
+						var part = $scope.nodes[i].split('<==')[1].split(',');
+						part = part[part.lastIndexOf(' "Part in work:"') + 1].replace(/"/g,'');
+						
+						var statFile = $scope.task.statusfile.split(',');
+						var stat = '';
+						for(var j in statFile){
+							if(statFile[j].indexOf(name.split('.')[0]) != -1){
+								if(statFile[j].indexOf('BUSY') != -1)
+									stat = 'BUSY';
+								if(statFile[j].indexOf('READY') != -1)
+									stat = 'READY';
+								if(statFile[j].indexOf('EXCLUDED') != -1)
+									stat = 'EXCLUDED';
+								if(statFile[j].indexOf('ERROR') != -1)
+									stat = 'ERROR';
+								break;
+							}
+						}
+						if(name.indexOf('node1') != -1)
+							$scope.head = {'name': name, 'part': part};
+						else if(name.indexOf('node2') != -1)
+							$scope.cluster = {'name': name, 'part': part};
+						else
+							$scope.node.push({'name': name, 'part': part, 'stat': stat});
+					}
+				});
 			},function(){
 				$location.path('/tasks');
 			});

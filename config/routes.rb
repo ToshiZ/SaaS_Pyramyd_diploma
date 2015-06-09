@@ -42,12 +42,15 @@ Rails.application.routes.draw do
   post 'user_app/tasks/dell_task/:params' => 'ssh_actions#dell_task'
   post 'user_app/tasks/:id/dell_task/:params' => 'ssh_actions#dell_task'
 
+  get 'user_app/tasks/:id/get_nodes/:name/:password' => 'ssh_actions#get_nodes'
+
   get 'admin_app/ssh_actions/:name/:password' => 'ssh_actions#testConnection'
   get 'admin_app/getinf/:name/:password/:command' => 'ssh_actions#runCommand'
   get 'admin_app/getOutputs/:name/:password/:task_name' => 'ssh_actions#get_outputs'
   post 'admin_app/run_command/:params' => 'ssh_actions#runCommand'
   post 'admin_app/dell_task/:params' => 'ssh_actions#dell_task'
   get 'admin_app/getinf/:name/:password' => 'ssh_actions#getInfo'
+
 
   #root to: 'application#index'
   root to: 'my_auth#index'

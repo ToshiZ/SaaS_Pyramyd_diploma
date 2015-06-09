@@ -27,13 +27,40 @@ class SshActionsController < ApplicationController
   def show
     
   end
+  def get_nodes
+    serv = SshConnection.find_by name: params[:name]
+    str = 'find . -name "node*.log" -exec tail "$file" {} +;'
+    @res 
+    begin
+      Net::SSH.start(serv.ip, serv.login, :password => params[:password]) do |ssh|
+        @res = ssh.exec!(strConvert(str)).split("\n")
+       @res = @res.to_s.encode('UTF-8', {:invalid => :replace, :undef => :replace, :replace => '?'})
+       puts @res
+        render json: {  success: true, info: @res}
+      end
+    rescue
+      render json: {  success: false, info: @res}
+    end
+  end
+
+  def get_nodes_status
+    serv = SshConnection.find_by name: params[:name]
+    str = 'cat statusfile'
+    @res 
+    begin
+      Net::SSH.start(serv.ip, serv.login, :password => params[:password]) do |ssh|
+        @res = ssh.exec!(strConvert(str)).split("\n")
+       @res = @res.to_s.encode('UTF-8', {:invalid => :replace, :undef => :replace, :replace => '?'})
+        render json: {  success: true, info: @res}
+      end
+    rescue
+      render json: {  success: false, info: @res}
+    end
+  end
+
   def runCommand
     serv = SshConnection.find_by name: params[:name]
-    #puts 0
-   # puts params[:password]
-   # puts params[:command]["procNum"]
     str = "epkrun -np " + params[:command]["procNum"].to_s + " -maxtime " + params[:command]["maxTime"].to_s + " -passp " + params[:command]["passportName"].to_s + " -tsk " + params[:command]["taskName"].to_s
-    #puts str
     begin
     Net::SSH.start(serv.ip, serv.login, :password => params[:password]) do |ssh|
       ssh.shell do |sh|
@@ -57,15 +84,10 @@ class SshActionsController < ApplicationController
    rescue
      puts 55555555
      render json: {  success: true, info: 'Ok'} 
-    #     puts @res  
-    # render json: { success: false, serv_name: serv.name }
    end
      
   end
   def dell_task
-    puts 0
-    puts params[:password]
-    puts params[:name]
     if (params[:type_dell] == 'queue')
       str_dell = 'mqdel'
     else
@@ -73,18 +95,13 @@ class SshActionsController < ApplicationController
     end
     str_dell+= ' ' + params[:task_name]
     serv = SshConnection.find_by name: params[:name]
-    puts serv.ip
-    puts serv.login
-    puts(str_dell)
     begin
      # Net::SSH.start('172.16.36.128', 'user', :password => 'user') do |ssh|
       Net::SSH.start(serv.ip, serv.login, :password => params[:password]) do |ssh|
         res = ssh.exec!(strConvert(str_dell)).split("\n")
-        puts(res)
         render json: { success: true, info: res}
       end
     rescue
-      #puts (res)
       render json: { success: false, info: res }
     end
   end
@@ -110,11 +127,7 @@ class SshActionsController < ApplicationController
      end
   end
   def getInfo
-    # puts 123
-    #   puts params[:name]
-    #   puts params[:password]
     serv = SshConnection.find_by name: params[:name]
-    # puts serv.login
     begin
     Net::SSH.start(serv.ip, serv.login, :password => params[:password]) do |ssh|
       ress = ssh.exec!(strConvert("mqinfo"))
@@ -150,7 +163,12 @@ class SshActionsController < ApplicationController
               task.work_status = ssh.exec!(strConvert("cat " + templ + "/work.status")).split("\n")
             rescue
               task.work_status = ''
-            end           
+            end   
+            begin
+              task.statusfile = ssh.exec!(strConvert("cat " + templ + "/status.log")).split("\n")
+            rescue
+              task.statusfile = ''
+            end          
             task.mqinfo = res[i]
             begin 
                task.errors_suppz = ssh.exec!(strConvert("cat " + templ+ "/" + task_name + "/errors")).split("\n")
@@ -193,7 +211,12 @@ class SshActionsController < ApplicationController
               task.work_status = ssh.exec!(strConvert("cat " + templ + "/work.status")).split("\n")
             rescue
               task.work_status = ''
-            end           
+            end 
+            begin
+              task.statusfile = ssh.exec!(strConvert("cat " + templ + "/status.log")).split("\n")
+            rescue
+              task.statusfile = ''
+            end               
             task.mqinfo = res[i]
             begin 
                task.errors_suppz = ssh.exec!(strConvert("cat " + templ+ "/" + task_name + "/errors")).split("\n")
@@ -228,7 +251,12 @@ class SshActionsController < ApplicationController
               task.work_status = ssh.exec!(strConvert("cat " + templ + "/work.status")).split("\n")
             rescue
               task.work_status = ''
-            end           
+            end
+            begin
+              task.statusfile = ssh.exec!(strConvert("cat " + templ + "/status.log")).split("\n")
+            rescue
+              task.statusfile = ''
+            end                
             task.mqinfo = res[i]
             begin 
                task.errors_suppz = ssh.exec!(strConvert("cat " + templ+ "/" + task_name + "/errors")).split("\n")

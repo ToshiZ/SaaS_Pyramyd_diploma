@@ -7,13 +7,6 @@ angular.module('pyramidApp')
 			combiner();
 			refreshTimer = $interval(combiner, 1000);
 		};
-		// $scope.getOutputs = function(task){
-		// 	GetOutputs.get({name: 'Head', password: 'user', task_name: task.name.replace(/\./g, "_")}, function(resp){
-		// 		//$scope.taskInfo = resp;		
-		// 		//console.log(resp);
-		// 		task['managerLog'] = resp.info;
-		// 	});
-		// };
 		$scope.stopTask = function(tsk){
 			var typeDell = tsk.status_suppz == 'run'? 'kill': 'queue';
 			var res = $http.post('/user_app/tasks/dell_task/:params', {name: 'Head', password: 'user', type_dell: typeDell, 'task_name': tsk.name});
