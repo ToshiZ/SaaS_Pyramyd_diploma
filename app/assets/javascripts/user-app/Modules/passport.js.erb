@@ -24,8 +24,22 @@ pyramidApp.config(['$routeProvider', '$locationProvider',function ($routeProvide
 		        controller: "TaskDetailsCtrl" })
 		    .otherwise({ redirectTo: '/user_app/' });
 	}]);
+pyramidApp.filter('secondsToTimeString', function() {
+  return function(millseconds) {
+    var seconds = Math.floor(millseconds % 60);
+    var days = Math.floor(millseconds / 86400);
+    var hours = Math.floor((millseconds % 86400) / 3600);
+    var minutes = Math.floor(((millseconds % 86400) % 3600) / 60);
+    var timeString = '';
+    if(days > 0) timeString += (days > 1) ? (days + " дней ") : (days + " день ");
+    if(hours > 0) timeString += (hours > 1) ? (hours + " часов ") : (hours + " час ");
+    if(minutes > 0) timeString += (minutes > 1) ? (minutes + " минут ") : (minutes + " минута ");
+    if(seconds >= 0) timeString += (seconds > 1) ? (seconds + " секунд ") : (seconds + " секунда ");
+    return timeString;
+}
+});
 pyramidApp.factory('Connections', ['$resource', function($resource) {
-  return $resource('/user_app/ssh_connections/:id.json', null, {
+  return $resource('/admin_app/ssh_connections/:id.json', null, {
   });
 }]);
 pyramidApp.factory('Tasks', ['$resource', function($resource) {

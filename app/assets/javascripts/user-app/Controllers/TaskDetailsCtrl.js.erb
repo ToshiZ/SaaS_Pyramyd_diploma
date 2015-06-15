@@ -1,19 +1,23 @@
 'use strict';
 angular.module('pyramidApp')
 	.controller('TaskDetailsCtrl',['$scope', '$routeParams', 'Tasks', '$interval', 'GetInf', 'GetOutputs', 'Templates', '$http', '$location', 'GetNodes', function($scope, $routeParams, Tasks, $interval, GetInf, GetOutputs, Templates, $http, $location, GetNodes){
-		var refreshTimer;
+		var refreshTimer,
+			remainedTimer;
+		$scope.remainedTime = 0;		
+		$scope.taskk = {};
+		$scope.taskk.remainedSum = 0;
 		$scope.taskId = $routeParams.taskId;
 		$scope.getInf = function(){
 			combiner();
-			refreshTimer = $interval(combiner, 2000);
+			refreshTimer = $interval(combiner, 1000);
 		}
 		$scope.$on("$destroy", function(){
     		$scope.stopInterval();
 		});
 	 	$scope.stopInterval = function() {
       		if (angular.isDefined(refreshTimer)) {
-        		$interval.cancel(refreshTimer);
-        		refreshTimer = undefined;
+        		$interval.cancel(refreshTimer);        		
+        		refreshTimer = undefined;        		
       		}
     	};
     	$scope.removeTask = function(){
@@ -27,6 +31,8 @@ angular.module('pyramidApp')
 			if(confirm('Вы уверены?')){
 				var res = $http.post('/user_app/tasks/:id/dell_task/:params', {name: 'Head', password: 'user', type_dell: typeDell, 'task_name': $scope.task.name});
 				res.success(function(data, status, headers, config) {
+					$interval.cancel(remainedTimer);
+					remainedTimer = undefined;
 				});
 			}
 		};
@@ -51,16 +57,20 @@ angular.module('pyramidApp')
 				$scope.task.compiled = $scope.task.compite_work.split(' ');
 				
 				$scope.task.compiledSum = 0;
-				$scope.task.remainedSum = 0;
 				for(var i in $scope.task.compiled){
 					if(i%2 == 1)
 						$scope.task.compiledSum += parseInt($scope.task.compiled[i]);
 				}
-				if($scope.task.remainedSum == 0){
+				if($scope.taskk.remainedSum === 0){
 					for(var i in $scope.task.remained){
 						if(i%2 == 1)
-							$scope.task.remainedSum += parseInt($scope.task.remained[i]);
+							$scope.taskk.remainedSum += parseInt($scope.task.remained[i]);
 					}
+				}
+				if(!angular.isDefined(remainedTimer)){
+					remainedTimer = $interval(function(){
+						$scope.remainedTime++;
+					}, 1000);
 				}
 				if($scope.task.status_suppz == 'queue'){
 					$scope.queuePeriod = $scope.task.mqinfo.split('~')[1].split(' ')[0];
@@ -79,6 +89,8 @@ angular.module('pyramidApp')
 					//$scope.blockFlag = $scope.task.mqinfo.split('~~~')[0].split(' ');
 					//$scope.blockFlag = $scope.blockFlag[$scope.blockFlag.length - 1];
 					//$scope.startTimeFin = $scope.task.mqinfo.split('>:')[1];
+					$interval.cancel(remainedTimer);
+					remainedTimer = undefined;
 				}
 
 				GetNodes.get({id: $scope.taskId, name: 'Head', password: 'user'}, function(resp){
@@ -90,7 +102,7 @@ angular.module('pyramidApp')
 						var name = $scope.nodes[i].split('<==')[0].split(':')[0].split('/');
 						name = name[name.length - 1];
 						var part = $scope.nodes[i].split('<==')[1].split(',');
-						part = part[part.lastIndexOf(' "Part in work:"') + 1].replace(/"/g,'');
+						part = part[part.lastIndexOf(' "Part in work:"') + 1].replace(/"/g,'').replace(/\\/g,'').replace(/]/g,'');
 						
 						var statFile = $scope.task.statusfile.split(',');
 						var stat = '';
@@ -114,8 +126,10 @@ angular.module('pyramidApp')
 						else
 							$scope.node.push({'name': name, 'part': part, 'stat': stat});
 					}
+					$scope.ready = true;
 				});
 			},function(){
+				$scope.stopInterval();
 				$location.path('/tasks');
 			});
 		}

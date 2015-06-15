@@ -1,4 +1,4 @@
-<div ng-init="getInf()" class="span12">
+<div ng-init="getInf()" ng-show="ready" class="span12">
 	<h1>Задание: {{task.name}}</h1>	
 	 <div class="animate-switch-container"
     	ng-switch on="task.status_suppz">
@@ -10,45 +10,49 @@
   	</div>
   	<h3 ng-show="queuePeriod">Время до запуска: {{queuePeriod}} мин ({{startTime}})</h3>
   	<!-- <h3 ng-show="startTime"></h3> -->
-  	<h3 ng-show="timeToFinish && task.status_suppz == 'run'">Время до конца выполнения: {{timeToFinish}} мин ({{finishTime}})</h3>
+  	<h3 ng-show="timeToFinish && task.status_suppz == 'run'">Осталось заказанного времени: {{timeToFinish}} мин ({{finishTime}})</h3>
   	<h3 ng-show="blockFlag">Флаг блокировки: {{blockFlag}}</h3>
   	<h3 ng-show="timeToStartBlock">Время до запуска: {{timeToStartBlock}} мин ({{startTimeBlock}})</h3>
+  	<h3 ng-show="task.status_suppz != 'finished'">Текущее время выполнения: {{remainedTime | secondsToTimeString}}</h3>
+  	<h3 ng-show="task.status_suppz != 'finished'">Оставшееся время выполнения(прогнозируемое): {{(remainedTime * (taskk.remainedSum - task.compiledSum) / task.compiledSum) | secondsToTimeString}}</h3>
 
-  	<div ng-hide="task.compiledSum == task.remainedSum || !task.remainedSum" class="col-sm-4">
-  		<progressbar class="progress-striped" value="task.compiledSum" max="task.remainedSum" type="warning">{{((task.compiledSum/task.remainedSum)*100).toFixed(0) + '%'}}</progressbar>
+  	<div ng-hide="!taskk.remainedSum" class="col-sm-4">
+  		<progressbar class="progress-striped" value="task.compiledSum" max="taskk.remainedSum" type="warning">{{((task.compiledSum/taskk.remainedSum)*100).toFixed(0) + '%'}}</progressbar>
   	</div>
-  	<div class="row"></div>
   	<div class="container">
-	  	<div class="container">
-			<div class="col-md-1 col-sm-2 col-md-offset-5 alert alert-success fade in" title="Центральный сервер">
+  		<div class="row"></div>
+  		<hr style="margin: 10px;">
+	  	<h4 class="col-md-3">Центральный сервер</h4>	
+	  	<div class="container">	  		
+			<div class="col-md-1 col-sm-2 col-md-offset-2 text-center alert alert-success fade in" title="Центральный сервер">
 				{{head.name}}<br>{{head.part}}
 			</div>
 		</div>
-		<div class="row"></div>
-	  	<div class="container">
-			<div class="col-md-1 col-sm-2 col-md-offset-5 alert alert-success fade in" title="Сервер кластера">
+		<hr style="margin: 10px;">
+		<h4 class="col-md-3">Сервер кластера</h4>
+	  	<div class="container">			
+			<div class="col-md-1 col-sm-2 col-md-offset-2 text-center alert alert-success fade in" title="Сервер кластера">
 				{{cluster.name}}<br>{{cluster.part}}
 			</div>
 	  	</div>
-	  	<div class="row"></div>
-	  	<div class="span12">
-		  	<div ng-repeat="nd in node">	  		
-		  		<div class="animate-switch-container"
-	    			ng-switch on="nd.stat">
-	    			<div class="animate-switch" ng-switch-when="READY">
-		  				<div class="col-md-1 col-sm-2 col-md-offset-1 alert alert-info fade in" title="Готов к приему вычислительной работы">{{nd.name}}<br>{{nd.part}}</div>
-		  			</div>
-		  			<div class="animate-switch" ng-switch-when="BUSY">
-		  				<div class="col-md-1 col-sm-2 col-md-offset-1 alert fade in" title="Выполняет вычислительную работу">{{nd.name}}<br>{{nd.part}}</div>
-		  			</div>
-		  			<div class="animate-switch" ng-switch-when="EXCLUDED">
-		  				<div class="col-md-1 col-sm-2 col-md-offset-1 alert alert-standard fade in" title="Выключен из выполнения вычислительной работы">{{nd.name}}<br>{{nd.part}}</div>
-		  			</div>
-		  			<div class="animate-switch" ng-switch-when="ERROR">
-		  				<div class="col-md-1 col-sm-2 col-md-offset-1 alert alert-error fade in" title="Не отвечает или не исправен">{{nd.name}}<br>{{nd.part}}</div>
-		  			</div>
-		  		</div>
-		  	</div>
+	  	<hr style="margin: 10px;">
+		<h4 class="col-md-3">Вычислительные модули</h4>
+	  	<div ng-repeat="nd in node" class="container">	  		
+	  		<div class="animate-switch-container"
+    			ng-switch on="nd.stat">
+    			<div class="animate-switch" ng-switch-when="READY">
+	  				<div class="col-md-1 col-sm-2 col-md-offset-2  text-center alert alert-info fade in" title="Готов к приему вычислительной работы">{{nd.name}}<br>{{nd.part}}</div>
+	  			</div>
+	  			<div class="animate-switch" ng-switch-when="BUSY">
+	  				<div class="col-md-1 col-sm-2 col-md-offset-2 text-center alert fade in" title="Выполняет вычислительную работу">{{nd.name}}<br>{{nd.part}}</div>
+	  			</div>
+	  			<div class="animate-switch" ng-switch-when="EXCLUDED">
+	  				<div class="col-md-1 col-sm-2 col-md-offset-2 text-center alert alert-standard fade in" title="Выключен из выполнения вычислительной работы">{{nd.name}}<br>{{nd.part}}</div>
+	  			</div>
+	  			<div class="animate-switch" ng-switch-when="ERROR">
+	  				<div class="col-md-1 col-sm-2 col-md-offset-2 text-center alert alert-error fade in" title="Не отвечает или не исправен">{{nd.name}}<br>{{nd.part}}</div>
+	  			</div>
+	  		</div>
 	  	</div>
   	</div>
 	<div ng-show="task.status_suppz == 'run'" class="span14" >

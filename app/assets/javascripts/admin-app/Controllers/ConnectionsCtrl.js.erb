@@ -15,18 +15,21 @@ angular.module('pyramidAppAdmin')
 	// });
 	$scope.removeConnection = function(sshParam){
 		  Connections.remove({id: sshParam.id}, function() {
-            //If successful, remove it from our collection
             $scope.sshParams.splice($scope.sshParams.indexOf(sshParam), 1);
         });
 	};
 	$scope.testConnection = function(sshParam){
 		//GetInf.get({name: sshParam.name, password: 'user'});
-	SshCon.get({name: sshParam.name, password: sshParam.pass}, function(resp){
-				sshParam.ready = resp.success;});// return $http.get('/ssh_actions/testConnection/' + sshParam.name)
-		// 	.success(function(custs){
-		// 		sshParam.ready = cust;
-		// }).error(function(){});
-			};
+		if(sshParam.name == 'Head')
+			sshParam.ready = true;
+		else
+			sshParam.ready = false;
+	// SshCon.get({name: sshParam.name, password: sshParam.pass}, function(resp){
+	// 			sshParam.ready = resp.success;});// return $http.get('/ssh_actions/testConnection/' + sshParam.name)
+	// 	// 	.success(function(custs){
+	// 	// 		sshParam.ready = cust;
+	// 	// }).error(function(){});
+	 		};
 		//if(sshConnection.$valid){
 		// 	var req = {
 		// 			method: 'GET',
