@@ -5,7 +5,7 @@ angular.module('pyramidApp')
 		$scope.getInf = function(){
 			$scope.allTasks = [];
 			combiner();
-			refreshTimer = $interval(combiner, 1000);
+			refreshTimer = $interval(combiner, 2000);
 		};
 		$scope.stopTask = function(tsk){
 			if(confirm('Вы уверены?')){

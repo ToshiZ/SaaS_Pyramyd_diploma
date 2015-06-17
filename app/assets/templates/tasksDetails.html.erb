@@ -13,13 +13,13 @@
   	<h3 ng-show="timeToFinish && task.status_suppz == 'run'">Осталось заказанного времени: {{timeToFinish}} мин ({{finishTime}})</h3>
   	<h3 ng-show="blockFlag">Флаг блокировки: {{blockFlag}}</h3>
   	<h3 ng-show="timeToStartBlock">Время до запуска: {{timeToStartBlock}} мин ({{startTimeBlock}})</h3>
-  	<h3 ng-show="task.status_suppz != 'finished'">Текущее время выполнения: {{remainedTime | secondsToTimeString}}</h3>
-  	<h3 ng-show="task.status_suppz != 'finished'">Оставшееся время выполнения(прогнозируемое): {{(remainedTime * (taskk.remainedSum - task.compiledSum) / task.compiledSum) | secondsToTimeString}}</h3>
+  	<h3 ng-show="task.status_suppz == 'run'">Текущее время выполнения: {{remainedTime | secondsToTimeString}}</h3>
+  	<h3 ng-show="task.status_suppz == 'run'">Оставшееся время выполнения(прогнозируемое): {{(remainedTime * (taskk.remainedSum - task.compiledSum) / task.compiledSum) | secondsToTimeString}}</h3>
 
-  	<div ng-hide="!taskk.remainedSum" class="col-sm-4">
+  	<div ng-show="taskk.remainedSum && (task.status_suppz == 'run' || task.status_suppz == 'finished')" class="col-sm-4">
   		<progressbar class="progress-striped" value="task.compiledSum" max="taskk.remainedSum" type="warning">{{((task.compiledSum/taskk.remainedSum)*100).toFixed(0) + '%'}}</progressbar>
   	</div>
-  	<div class="container">
+  	<div class="container" ng-show="task.status_suppz == 'run'">
   		<div class="row"></div>
   		<hr style="margin: 10px;">
 	  	<h4 class="col-md-3">Центральный сервер</h4>	
@@ -55,7 +55,7 @@
 	  		</div>
 	  	</div>
   	</div>
-	<div ng-show="task.status_suppz == 'run'" class="span14" >
+	<div ng-hide="task.status_suppz == 'finished' || task.status_suppz == 'queue' || task.status_suppz == 'block'" class="span14" >
      	<div  class="accordion-group">
 			<div class="accordion-heading accordionize">
 		        <a  class="accordion-toggle" data-toggle="collapse" data-parent="#accordionArea">
@@ -71,7 +71,7 @@
 	        </div>
     	</div>
 	</div>		
-	<div  class="span14" >
+	<div ng-hide="task.status_suppz == 'queue' || task.status_suppz == 'block'"  class="span14" >
      	<div  class="accordion-group">
 			<div class="accordion-heading accordionize">
 		        <a  class="accordion-toggle" data-toggle="collapse" data-parent="#accordionArea">

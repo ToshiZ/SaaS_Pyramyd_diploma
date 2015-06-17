@@ -9,7 +9,7 @@ angular.module('pyramidApp')
 		$scope.taskId = $routeParams.taskId;
 		$scope.getInf = function(){
 			combiner();
-			refreshTimer = $interval(combiner, 1000);
+			refreshTimer = $interval(combiner, 1500);
 		}
 		$scope.$on("$destroy", function(){
     		$scope.stopInterval();
@@ -23,6 +23,9 @@ angular.module('pyramidApp')
     	$scope.removeTask = function(){
     		if(confirm('Вы уверены?')){
 		  		Tasks.remove({id: $scope.taskId}, function() {
+		  			$scope.stopInterval();
+		  			$interval.cancel(remainedTimer);
+					remainedTimer = undefined;
 		  			$location.path('/tasks');
 		  		});
 		  	}	
@@ -130,6 +133,8 @@ angular.module('pyramidApp')
 				});
 			},function(){
 				$scope.stopInterval();
+				$interval.cancel(remainedTimer);
+				remainedTimer = undefined;
 				$location.path('/tasks');
 			});
 		}
